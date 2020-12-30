@@ -5,23 +5,8 @@ import axios from "axios";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 
-//const LOCAL_STORAGE_KEY = "taskinate-app-tasks";
-
 function TasksContainer() {
   const [tasks, setTasks] = useState([]);
-  // useEffect(() => {
-  //   const storageTasks = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  //   if (storageTasks) {
-  //     setTasks(storageTasks);
-  //   }
-  // }, []);
-  // useEffect(() => {
-  //   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks));
-  // }, [tasks]);
-  // function createTask(task) {
-  //   if( !task.target.value === ""){
-  //     setTasks([task, ...tasks]);}
-  // }
 
   useEffect(() => {
     getAllTasks();
@@ -38,18 +23,17 @@ function TasksContainer() {
   };
 
   const createTask = (e) => {
+    console.log(e);
     axios
       .post("/api/v1/tasks/", { title: e, done: false })
       .then((response) => {
-        setTasks([response, ...tasks]);
+        // setTasks([response, ...tasks]);
         getAllTasks();
       })
       .catch((error) => console.log(error));
   };
 
   function updateComplete(e, id) {
-    console.log(e.target.checked);
-    console.log(id);
     axios
       .put(`/api/v1/tasks/${id}`, { done: e.target.checked })
       .then((response) => {
@@ -74,6 +58,24 @@ function TasksContainer() {
       .catch((error) => console.log(error));
     setTasks(tasks.filter((task) => task.id !== id));
   }
+
+  // function editTask(e, id) {
+  //   console.log(id);
+  //   const updatedTitle = {e.target.title}
+  //   axios
+  //     .put(`/api/v1/tasks/${id}`, { description: e.target.value})
+  //     .then((response) => {
+  //       setTasks(
+  //         tasks.map((task) => {
+  //           if (task.id === id) {
+  //             return { ...task, desciption: !task.done };
+  //           }
+  //           return task;
+  //         })
+  //       );
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
 
   return (
     <>

@@ -14,7 +14,7 @@ function Task({ task, updateComplete, deleteTask }) {
   return (
     <ListItem>
       <Checkbox
-        value={task.done}
+        value={task.done || ""}
         checked={task.done}
         onClick={handleCheckboxClick}
       />

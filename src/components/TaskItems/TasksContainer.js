@@ -16,14 +16,12 @@ function TasksContainer() {
     axios
       .get("api/v1/tasks")
       .then((response) => {
-        console.log(response);
         setTasks(response.data);
       })
       .catch((error) => console.log(error));
   };
 
   const createTask = (e) => {
-    console.log(e);
     axios
       .post("/api/v1/tasks/", { title: e, done: false })
       .then((response) => {
@@ -34,12 +32,15 @@ function TasksContainer() {
   };
 
   function updateComplete(e, id) {
+    console.log(e);
     axios
       .put(`/api/v1/tasks/${id}`, { done: e.target.checked })
       .then((response) => {
+        console.log("heyinupdate");
         setTasks(
           tasks.map((task) => {
             if (task.id === id) {
+              console.log(task);
               return { ...task, done: !task.done };
             }
             return task;

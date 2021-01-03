@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"
@@ -39,6 +39,7 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             Taskinate
           </Typography>
+          <Button color="inherit">Signin</Button>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>

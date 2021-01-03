@@ -30,7 +30,7 @@ function TaskForm({ createTask }) {
         className="taskform-input"
         name="task"
         type="text"
-        value={task.title}
+        value={task.title || ""}
         onChange={handleTaskInputChange}
       />
       <Button style={{ padding: 16 }} type="submit">

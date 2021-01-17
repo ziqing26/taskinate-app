@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
-// import { v4 as uuidv4 } from "uuid";
 //import axios from "axios";
 
 function TaskForm({ createTask }) {
@@ -8,6 +7,8 @@ function TaskForm({ createTask }) {
     id: "",
     title: "",
     done: false,
+    description: "",
+    tags: [],
   });
 
   function handleTaskInputChange(e) {

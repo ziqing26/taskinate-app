@@ -32,7 +32,6 @@ function TasksContainer() {
   };
 
   function updateComplete(e, id) {
-    console.log(e);
     axios
       .put(`/api/v1/tasks/${id}`, { done: e.target.checked })
       .then((response) => {

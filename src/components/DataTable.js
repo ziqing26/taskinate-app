@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 // import './App.css';
 import { forwardRef } from "react";
+// import TagArray from "./TaskItems/TagArray";
+// import TagsInput from "./TagsItems/TagsInput";
+import TagBox from "./TagsItems/TagBox";
+
 // import Avatar from 'react-avatar';
 import Grid from "@material-ui/core/Grid";
-
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -64,20 +67,33 @@ function DataTable() {
     // },
     {
       title: "Completed",
-      field: "done",
+      // field: "done",
+      editComponent: (rowData) => (
+        <Checkbox
+          checked={rowData.done}
+          onClick={(e) => handleClick(e, rowData)}
+        />
+      ),
       render: (rowData) => (
         <Checkbox
-          //   value={rowData.done}
           checked={rowData.done}
           onClick={(e) => handleClick(e, rowData)}
         />
       ),
     },
+
     { title: "Title", field: "title" },
     { title: "Description", field: "description" },
+    {
+      title: "Tags",
+      render: (rowData) => (
+        <TagBox taglist={taglist} rowData={rowData} updateTags={updateTags} />
+      ),
+    },
   ];
 
   const [data, setData] = useState([]); //table data
+  const [taglist, setTaglist] = useState([]);
 
   //for error handling
   const [iserror, setIserror] = useState(false);
@@ -85,24 +101,31 @@ function DataTable() {
 
   useEffect(() => {
     getAllData();
+    getAllTags();
   }, []);
 
   const getAllData = () => {
     axios
       .get("api/v1/tasks")
       .then((response) => {
-        console.log(response);
         setData(response.data);
       })
       .catch((error) => {
-        console.log("error when getting all tasks");
+        console.log("Error when getting all tasks");
         console.log(error);
       });
   };
 
+  const getAllTags = () => {
+    axios
+      .get("api/v2/tags")
+      .then((response) => {
+        setTaglist(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleClick = (e, rowData) => {
-    console.log("hey");
-    console.log({ e });
     axios
       .put(`/api/v1/tasks/${rowData.id}`, { done: e.target.checked })
       .then((response) => {
@@ -118,6 +141,16 @@ function DataTable() {
       .catch((error) => console.log(error));
   };
 
+  const updateTags = (event, value, rowData) => {
+    console.log("updateTags");
+    const newdata = value.map((s) => s.id);
+    axios
+      .put(`/api/v1/tasks/${rowData.id}`, { tag_ids: newdata })
+      .then((response) => {
+        getAllData();
+      })
+      .catch((error) => console.log(error));
+  };
   const handleRowUpdate = (newData, oldData, resolve) => {
     //validation
     let errorList = [];
@@ -200,9 +233,9 @@ function DataTable() {
 
   return (
     <div className="App">
-      <Grid container spacing={1}>
+      <Grid container spacing={5}>
         <Grid item xs={3}></Grid>
-        <Grid item xs={6}>
+        <Grid item xs={10}>
           <div>
             {iserror && (
               <Alert severity="error">

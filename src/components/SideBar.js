@@ -10,11 +10,18 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
+import ViewListRoundedIcon from "@material-ui/icons/ViewListRounded";
+import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import Button from "@material-ui/core/Button";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { Link } from "react-router-dom";
+
+import TagsContainer from "./TagsItems/TagsContainer";
 
 const drawerWidth = 240;
 
@@ -75,7 +82,7 @@ export default function ClippedDrawer() {
           <List>
             <ListItem>
               <ListItemIcon>
-                <InboxIcon />
+                <HomeRoundedIcon />
               </ListItemIcon>
               <Link to="/">
                 <ListItemText primary="Home" />
@@ -83,7 +90,7 @@ export default function ClippedDrawer() {
             </ListItem>
             <ListItem>
               <ListItemIcon>
-                <InboxIcon />
+                <ViewListRoundedIcon />
               </ListItemIcon>
               <Link to="/overview">
                 <ListItemText primary="Overview" />
@@ -93,17 +100,31 @@ export default function ClippedDrawer() {
           <Divider />
           <List>
             <ListItem>
-              <ListItemIcon>
-                <MailIcon />
-              </ListItemIcon>
-              <ListItemText primary="Tags" />
+              <Accordion elevation={1} defaultExpanded={true}>
+                <Link to="/tags">
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    // aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <ListItemIcon>
+                      <LocalOfferOutlinedIcon />
+                    </ListItemIcon>
+                    <ListItemText> Tags </ListItemText>
+                  </AccordionSummary>
+                </Link>
+                <AccordionDetails>
+                  <TagsContainer />
+                </AccordionDetails>
+              </Accordion>
             </ListItem>
-            <ListItem>
+
+            {/* <ListItem>
               <ListItemIcon>
                 <MailIcon />
               </ListItemIcon>
               <ListItemText primary="Profile" />
-            </ListItem>
+            </ListItem> */}
           </List>
         </div>
       </Drawer>

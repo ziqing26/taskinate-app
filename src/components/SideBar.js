@@ -24,12 +24,14 @@ import { Link } from "react-router-dom";
 import TagsContainer from "./TagsItems/TagsContainer";
 
 const drawerWidth = 240;
-
+const primary = "#b2ebf2";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
   appBar: {
+    backgroundColor: primary,
+    color: "#212121",
     zIndex: theme.zIndex.drawer + 1,
     flexGrow: 1,
     marginLeft: 0,
@@ -118,13 +120,6 @@ export default function ClippedDrawer() {
                 </AccordionDetails>
               </Accordion>
             </ListItem>
-
-            {/* <ListItem>
-              <ListItemIcon>
-                <MailIcon />
-              </ListItemIcon>
-              <ListItemText primary="Profile" />
-            </ListItem> */}
           </List>
         </div>
       </Drawer>

@@ -21,6 +21,3 @@ function TagsItem({ tag, deleteTag }) {
 }
 
 export default TagsItem;
-
-//(able to CRUD on each tag)
-//[map]link each tag to a filtered table

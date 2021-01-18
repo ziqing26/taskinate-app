@@ -6,7 +6,6 @@ import TagItem from "./TagItem";
 function TagsList({ tags, updateTag, deleteTag }) {
   function handleClick(id) {
     this.props.history.push("/tags/" + id);
-    window.location.reload(false);
   }
   const displayTags = (tags) => {
     if (tags.length > 0) {

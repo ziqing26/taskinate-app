@@ -28,7 +28,6 @@ function TagsContainer() {
     axios
       .post("/api/v2/tags", { name: e })
       .then((response) => {
-        console.log("hey response");
         // setTags([...tags, response]);
         getAllTags();
       })
@@ -40,7 +39,6 @@ function TagsContainer() {
     axios
       .put(`/api/v2/tags/${id}`, { tasks: e.target.value })
       .then((response) => {
-        console.log("heyinupdate");
         setTags(
           tags.map((tag) => {
             if (tag.id === id) {

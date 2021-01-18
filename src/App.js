@@ -4,11 +4,12 @@ import "./App.css";
 import SideBar from "./components/SideBar";
 import TasksContainer from "./components/TaskItems/TasksContainer";
 import TagsContainer from "./components/TagsItems/TagsContainer";
-import { CssBaseline } from "@material-ui/core";
+// import { CssBaseline } from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
-import DataTable from "./components/DataTable";
-import TagDetails from "./components/TagsItems/TagDetails";
+import OverviewTable from "./components/OverviewTable";
+import TagTable from "./components/TagsItems/TagTable";
 import { makeStyles } from "@material-ui/core/styles";
+import SignIn from "./components/Authentication/SignIn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
   },
   content: {
-    paddingTop: "30px",
+    paddingTop: "25px",
     paddingLeft: "300px",
+    display: "center",
   },
   title: {
     flexGrow: 1,
@@ -35,21 +37,23 @@ export default function App() {
     <>
       <BrowserRouter>
         {/* <CssBaseline /> */}
-        <SideBar />
-        <main className={classes.content}>
-          <Toolbar />
-          {/* <TagArray /> */}
+        <Switch>
+          <Route path="/login" component={SignIn} />
+          <SideBar />
+          <main className={classes.content}>
+            <Toolbar />
 
-          <Switch>
-            <Route exact path="/">
-              <h1 align="center">Hey! What's the plan today?</h1>
-              <TasksContainer />
-            </Route>
-            <Route exact path="/overview" component={DataTable} />
-            <Route path="/tags/:tagId" component={TagDetails} />
-            <Route exact path="/tags" component={TagsContainer} />
-          </Switch>
-        </main>
+            <Switch>
+              <Route exact path="/">
+                <h1 align="center">Hey! What's the plan today?</h1>
+                <TasksContainer />
+              </Route>
+              <Route path="/overview" component={OverviewTable} />
+              <Route path="/tags/:tagId" component={TagTable} />
+              <Route exact path="/tags" component={TagsContainer} />
+            </Switch>
+          </main>
+        </Switch>
       </BrowserRouter>
     </>
   );

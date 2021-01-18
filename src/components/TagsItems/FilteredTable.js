@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import './App.css';
 import { forwardRef } from "react";
-// import TagArray from "./TaskItems/TagArray";
-// import TagsInput from "./TagsItems/TagsInput";
-import TagBox from "./TagsItems/TagBox";
-
-// import Avatar from 'react-avatar';
 import Grid from "@material-ui/core/Grid";
 import MaterialTable from "material-table";
 import AddBox from "@material-ui/icons/AddBox";
@@ -51,23 +45,11 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-function DataTable() {
+function FilteredTable({ selectedTasks, selectedTag }) {
   var columns = [
     { title: "id", field: "id", hidden: true },
-    // {
-    //   title: "Avatar",
-    //   render: (rowData) => (
-    //     <Avatar
-    //       maxInitials={1}
-    //       size={40}
-    //       round={true}
-    //       name={rowData === undefined ? " " : rowData.first_name}
-    //     />
-    //   ),
-    // },
     {
-      title: "Completed",
-      // field: "done",
+      title: "Status",
       editComponent: (rowData) => (
         <Checkbox
           checked={rowData.done}
@@ -81,48 +63,33 @@ function DataTable() {
         />
       ),
     },
-
     { title: "Title", field: "title" },
     { title: "Description", field: "description" },
-    {
-      title: "Tags",
-      render: (rowData) => (
-        <TagBox taglist={taglist} rowData={rowData} updateTags={updateTags} />
-      ),
-    },
   ];
 
   const [data, setData] = useState([]); //table data
-  const [taglist, setTaglist] = useState([]);
 
   //for error handling
   const [iserror, setIserror] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
 
   useEffect(() => {
-    getAllData();
-    getAllTags();
-  }, []);
+    getAllData(selectedTasks);
+  }, [selectedTasks]);
 
-  const getAllData = () => {
-    axios
-      .get("api/v1/tasks")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.log("Error when getting all tasks");
-        console.log(error);
-      });
-  };
-
-  const getAllTags = () => {
-    axios
-      .get("api/v2/tags")
-      .then((response) => {
-        setTaglist(response.data);
-      })
-      .catch((error) => console.log(error));
+  const getAllData = (selectedTasks) => {
+    setData(selectedTasks);
+    // console.log(selectedTasks);
+    // setData(selectedTasks);
+    // axios
+    //   .get("api/v1/tasks")
+    //   .then((response) => {
+    //     setData(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error when getting all tasks");
+    //     console.log(error);
+    //   });
   };
 
   const handleClick = (e, rowData) => {
@@ -141,16 +108,6 @@ function DataTable() {
       .catch((error) => console.log(error));
   };
 
-  const updateTags = (event, value, rowData) => {
-    console.log("updateTags");
-    const newdata = value.map((s) => s.id);
-    axios
-      .put(`/api/v1/tasks/${rowData.id}`, { tag_ids: newdata })
-      .then((response) => {
-        getAllData();
-      })
-      .catch((error) => console.log(error));
-  };
   const handleRowUpdate = (newData, oldData, resolve) => {
     //validation
     let errorList = [];
@@ -172,38 +129,6 @@ function DataTable() {
         })
         .catch((error) => {
           setErrorMessages(["Update failed! Server error"]);
-          setIserror(true);
-          resolve();
-        });
-    } else {
-      setErrorMessages(errorList);
-      setIserror(true);
-      resolve();
-    }
-  };
-
-  const handleRowAdd = (newData, resolve) => {
-    //validation
-    let errorList = [];
-    if (newData.title === undefined) {
-      errorList.push("Please enter title");
-    }
-
-    if (errorList.length < 1) {
-      //no error
-      axios
-        .post("api/v1/tasks/", newData)
-        .then((res) => {
-          // let dataToAdd = [...data];
-          // dataToAdd.push(newData);
-          // setData(dataToAdd);
-          getAllData();
-          resolve();
-          setErrorMessages([]);
-          setIserror(false);
-        })
-        .catch((error) => {
-          setErrorMessages(["Cannot add data. Server error!"]);
           setIserror(true);
           resolve();
         });
@@ -246,7 +171,7 @@ function DataTable() {
             )}
           </div>
           <MaterialTable
-            title="Tasks overview"
+            title={selectedTag}
             columns={columns}
             data={data}
             icons={tableIcons}
@@ -254,10 +179,6 @@ function DataTable() {
               onRowUpdate: (newData, oldData) =>
                 new Promise((resolve) => {
                   handleRowUpdate(newData, oldData, resolve);
-                }),
-              onRowAdd: (newData) =>
-                new Promise((resolve) => {
-                  handleRowAdd(newData, resolve);
                 }),
               onRowDelete: (oldData) =>
                 new Promise((resolve) => {
@@ -272,4 +193,4 @@ function DataTable() {
   );
 }
 
-export default DataTable;
+export default FilteredTable;

@@ -158,37 +158,38 @@ function FilteredTable({ selectedTasks, selectedTag }) {
 
   return (
     <div className="App">
-      <Grid container spacing={5}>
-        <Grid item xs={3}></Grid>
-        <Grid item xs={10}>
-          <div>
-            {iserror && (
-              <Alert severity="error">
-                {errorMessages.map((msg, i) => {
-                  return <div key={i}>{msg}</div>;
-                })}
-              </Alert>
-            )}
-          </div>
-          <MaterialTable
-            title={selectedTag}
-            columns={columns}
-            data={data}
-            icons={tableIcons}
-            editable={{
-              onRowUpdate: (newData, oldData) =>
-                new Promise((resolve) => {
-                  handleRowUpdate(newData, oldData, resolve);
-                }),
-              onRowDelete: (oldData) =>
-                new Promise((resolve) => {
-                  handleRowDelete(oldData, resolve);
-                }),
-            }}
-          />
-        </Grid>
-        <Grid item xs={3}></Grid>
+      {/* <Grid container spacing={10}> */}
+      {/* <Grid item xs={3}></Grid> */}
+      <Grid item xs={30}>
+        <div>
+          {iserror && (
+            <Alert severity="error">
+              {errorMessages.map((msg, i) => {
+                return <div key={i}>{msg}</div>;
+              })}
+            </Alert>
+          )}
+        </div>
+        <MaterialTable
+          title={selectedTag}
+          columns={columns}
+          data={data}
+          value={data}
+          icons={tableIcons}
+          editable={{
+            onRowUpdate: (newData, oldData) =>
+              new Promise((resolve) => {
+                handleRowUpdate(newData, oldData, resolve);
+              }),
+            onRowDelete: (oldData) =>
+              new Promise((resolve) => {
+                handleRowDelete(oldData, resolve);
+              }),
+          }}
+        />
       </Grid>
+      {/* <Grid item xs={3}></Grid> */}
+      {/* </Grid> */}
     </div>
   );
 }

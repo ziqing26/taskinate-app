@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { List } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import axios from "axios";
 import FilteredTable from "./FilteredTable";
 
@@ -12,7 +12,7 @@ function TagTable() {
     getTag(tagId);
   }, [tagId]);
 
-  axios.defaults.baseURL = "http://localhost:3000";
+  // axios.defaults.baseURL = "http://localhost:3000";
 
   const getTag = (id) => {
     axios
@@ -24,9 +24,9 @@ function TagTable() {
   };
 
   return (
-    <List>
+    <Grid container direction="column" justify="center" alignContent="center">
       <FilteredTable selectedTasks={tag.tasks} selectedTag={tag.name} />
-    </List>
+    </Grid>
   );
 }
 

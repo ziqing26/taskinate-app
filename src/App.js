@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     paddingTop: "25px",
-    paddingLeft: "300px",
+    paddingLeft: "240px",
     display: "center",
   },
   title: {
@@ -38,21 +38,23 @@ export default function App() {
       <BrowserRouter>
         {/* <CssBaseline /> */}
         <Switch>
-          <Route path="/login" component={SignIn} />
-          <SideBar />
-          <main className={classes.content}>
-            <Toolbar />
+          <Route exact path="/login" component={SignIn} />
+          <Route>
+            <SideBar />
+            <main className={classes.content}>
+              <Toolbar />
 
-            <Switch>
-              <Route exact path="/">
-                <h1 align="center">Hey! What's the plan today?</h1>
-                <TasksContainer />
-              </Route>
-              <Route path="/overview" component={OverviewTable} />
-              <Route path="/tags/:tagId" component={TagTable} />
-              <Route exact path="/tags" component={TagsContainer} />
-            </Switch>
-          </main>
+              <Switch>
+                <Route exact path="/">
+                  <h1 align="center">Hey! What's the plan today?</h1>
+                  <TasksContainer />
+                </Route>
+                <Route path="/overview" component={OverviewTable} />
+                <Route path="/tags/:tagId" component={TagTable} />
+                <Route exact path="/tags" component={TagsContainer} />
+              </Switch>
+            </main>
+          </Route>
         </Switch>
       </BrowserRouter>
     </>

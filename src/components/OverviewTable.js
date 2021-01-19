@@ -215,7 +215,7 @@ function OverviewTable() {
 
   return (
     <div className="App">
-      <Grid container spacing={5}>
+      <Grid container direction="column" justify="center" alignContent="center">
         <Grid item xs={3}></Grid>
         <Grid item xs={10}>
           <div>

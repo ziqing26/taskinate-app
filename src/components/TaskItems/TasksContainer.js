@@ -59,24 +59,6 @@ function TasksContainer() {
     setTasks(tasks.filter((task) => task.id !== id));
   }
 
-  // function editTask(e, id) {
-  //   console.log(id);
-  //   const updatedTitle = {e.target.title}
-  //   axios
-  //     .put(`/api/v1/tasks/${id}`, { description: e.target.value})
-  //     .then((response) => {
-  //       setTasks(
-  //         tasks.map((task) => {
-  //           if (task.id === id) {
-  //             return { ...task, desciption: !task.done };
-  //           }
-  //           return task;
-  //         })
-  //       );
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
-
   return (
     <>
       <Grid container direction="column" justify="center" alignContent="center">

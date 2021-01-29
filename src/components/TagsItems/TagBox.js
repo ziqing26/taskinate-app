@@ -33,7 +33,7 @@ export default function TagBox({ taglist, rowData, updateTags }) {
             {...params}
             variant="standard"
             // label="Multiple values"
-            placeholder="Click to Add"
+            placeholder="Add"
           />
         )}
       />

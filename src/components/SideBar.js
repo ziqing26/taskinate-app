@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -18,10 +18,11 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
-import { Link } from "react-router-dom";
-
+import Box from "@material-ui/core/Box";
+import axios from "axios";
+import { useHistory, Link } from "react-router-dom";
 import TagsContainer from "./TagsItems/TagsContainer";
+import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 
 const drawerWidth = 240;
 const primary = "#b2ebf2";
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: primary,
     color: "#212121",
     zIndex: theme.zIndex.drawer + 1,
-    flexGrow: 1,
+    flexGrow: 2,
     marginLeft: 0,
     marginRight: 0,
   },
@@ -58,17 +59,73 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ClippedDrawer() {
   const classes = useStyles();
+  const history = useHistory();
+  const [userData, setUserData] = useState({
+    isLoggedIn: true,
+    user: [],
+  });
+
+  useEffect(() => {
+    loginStatus();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const loginStatus = () => {
+    axios
+      .get("/api/v3/logged_in", { withCredentials: true })
+      .then((response) => {
+        if (response.data.logged_in) {
+          handleLogin(response);
+        } else {
+          handleLogout();
+        }
+      })
+      .catch((error) => console.log("api errors:", error));
+  };
+
+  const handleLogin = (data) => {
+    setUserData({
+      isLoggedIn: true,
+      user: data.user,
+    });
+    console.log(userData);
+  };
+
+  const handleLogout = () => {
+    setUserData({
+      isLoggedIn: false,
+      user: {},
+    });
+  };
+
+  const handleClick = () => {
+    // window.location.reload(false);
+    axios
+      .delete("/api/v3/logout", { withCredentials: true })
+      .then((response) => {
+        handleLogout();
+        history.push("/");
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+          <AssignmentTurnedInIcon />
           <Typography variant="h6" className={classes.title}>
-            Taskinate
+            <Box
+              fontWeight="fontWeightBold"
+              fontFamily="Monospace"
+              fontSize={24}
+            >
+              Taskinate
+            </Box>
           </Typography>
-          <Button color="inherit">About</Button>
-          <Button color="inherit">Logout</Button>
+          <Link to="/logout" onClick={handleClick}>
+            <Button color="inherit">Logout</Button>
+          </Link>
         </Toolbar>
       </AppBar>
 
@@ -86,7 +143,7 @@ export default function ClippedDrawer() {
               <ListItemIcon>
                 <HomeRoundedIcon />
               </ListItemIcon>
-              <Link to="/">
+              <Link to="/welcome">
                 <ListItemText primary="Home" />
               </Link>
             </ListItem>
@@ -123,20 +180,6 @@ export default function ClippedDrawer() {
           </List>
         </div>
       </Drawer>
-      {/* <main className={classes.content}>
-        <Toolbar />
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/">
-              <h1 align="center">Hey! What's the plan today?</h1>
-              <TasksContainer />
-            </Route>
-            <Route path="/overview">
-              <DataTable />
-            </Route>
-          </Switch>
-        </BrowserRouter>
-      </main> */}
     </div>
   );
 }

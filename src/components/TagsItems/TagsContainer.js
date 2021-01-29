@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import TagForm from "./TagForm";
 import TagsList from "./TagsList";
-
-//get data from tags
 
 function TagsContainer() {
   const [tags, setTags] = useState([]);

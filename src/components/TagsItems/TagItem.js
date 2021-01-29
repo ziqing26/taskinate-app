@@ -6,7 +6,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 function TagsItem({ tag, deleteTag }) {
   function handleRemoveClick(e) {
     deleteTag(tag.id);
-    window.location.reload(false);
+    //window.location.reload(false);
   }
   return (
     <ListItem>

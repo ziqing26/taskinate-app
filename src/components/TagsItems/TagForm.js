@@ -13,7 +13,7 @@ function TagForm({ createTag }) {
   }
 
   function handleSubmit(e) {
-    // e.preventDefault();
+    e.preventDefault();
     if (tag.name !== "") {
       createTag(tag.name);
       setTag({ ...tag, name: "" });

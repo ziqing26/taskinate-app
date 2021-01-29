@@ -79,17 +79,6 @@ function FilteredTable({ selectedTasks, selectedTag }) {
 
   const getAllData = (selectedTasks) => {
     setData(selectedTasks);
-    // console.log(selectedTasks);
-    // setData(selectedTasks);
-    // axios
-    //   .get("api/v1/tasks")
-    //   .then((response) => {
-    //     setData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error when getting all tasks");
-    //     console.log(error);
-    //   });
   };
 
   const handleClick = (e, rowData) => {
@@ -158,8 +147,6 @@ function FilteredTable({ selectedTasks, selectedTag }) {
 
   return (
     <div className="App">
-      {/* <Grid container spacing={10}> */}
-      {/* <Grid item xs={3}></Grid> */}
       <Grid item xs={30}>
         <div>
           {iserror && (
@@ -188,8 +175,6 @@ function FilteredTable({ selectedTasks, selectedTag }) {
           }}
         />
       </Grid>
-      {/* <Grid item xs={3}></Grid> */}
-      {/* </Grid> */}
     </div>
   );
 }

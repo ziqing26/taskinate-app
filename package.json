@@ -6,7 +6,7 @@
     "npm": "6.14.9",
     "node": "14.15.3"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://taskinate-api.herokuapp.com",
   "secure": false,
   "dependencies": {
     "@material-ui/core": "^4.11.2",

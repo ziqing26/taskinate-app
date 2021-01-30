@@ -23,6 +23,8 @@ const styles = (theme) => ({
   },
 });
 
+axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
+
 class App extends Component {
   constructor(props) {
     super(props);

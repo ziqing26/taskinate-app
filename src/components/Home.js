@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = (props) => {
+  axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
   const classes = useStyles();
   const handleClick = () => {
     axios

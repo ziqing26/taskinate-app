@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ClippedDrawer() {
+  axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
   const classes = useStyles();
   const history = useHistory();
   const [userData, setUserData] = useState({

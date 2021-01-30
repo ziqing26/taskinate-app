@@ -47,6 +47,7 @@ const tableIcons = {
 };
 
 function OverviewTable() {
+  axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
   var columns = [
     { title: "id", field: "id", hidden: true },
     {

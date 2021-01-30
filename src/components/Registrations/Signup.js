@@ -32,6 +32,8 @@ const styles = (theme) => ({
   },
 });
 
+axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
+
 class Signup extends Component {
   constructor(props) {
     super(props);

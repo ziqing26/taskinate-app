@@ -7,7 +7,7 @@ import TaskList from "./TaskList";
 
 function TasksContainer() {
   const [tasks, setTasks] = useState([]);
-
+  axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
   useEffect(() => {
     getAllTasks();
   }, []);

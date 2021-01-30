@@ -12,8 +12,7 @@ function TagTable() {
     getTag(tagId);
   }, [tagId]);
 
-  // axios.defaults.baseURL = "http://localhost:3000";
-
+  axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
   const getTag = (id) => {
     axios
       .get(`/api/v2/tags/${id}`)

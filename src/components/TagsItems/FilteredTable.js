@@ -46,6 +46,7 @@ const tableIcons = {
 };
 
 function FilteredTable({ selectedTasks, selectedTag }) {
+  axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
   var columns = [
     { title: "id", field: "id", hidden: true },
     {

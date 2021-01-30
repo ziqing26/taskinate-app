@@ -6,7 +6,7 @@ import TagsList from "./TagsList";
 
 function TagsContainer() {
   const [tags, setTags] = useState([]);
-
+  axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
   useEffect(() => {
     getAllTags();
   }, []);

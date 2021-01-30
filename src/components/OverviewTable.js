@@ -48,6 +48,7 @@ const tableIcons = {
 
 function OverviewTable() {
   axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
+
   var columns = [
     { title: "id", field: "id", hidden: true },
     {
@@ -89,7 +90,7 @@ function OverviewTable() {
 
   const getAllData = () => {
     axios
-      .get("api/v1/tasks")
+      .get("api/v1/tasks", { withCredentials: true })
       .then((response) => {
         setData(response.data);
       })
@@ -101,7 +102,7 @@ function OverviewTable() {
 
   const getAllTags = () => {
     axios
-      .get("api/v2/tags")
+      .get("api/v2/tags", { withCredentials: true })
       .then((response) => {
         setTaglist(response.data);
       })
@@ -110,7 +111,11 @@ function OverviewTable() {
 
   const handleClick = (e, rowData) => {
     axios
-      .put(`/api/v1/tasks/${rowData.id}`, { done: e.target.checked })
+      .put(
+        `/api/v1/tasks/${rowData.id}`,
+        { done: e.target.checked },
+        { withCredentials: true }
+      )
       .then((response) => {
         setData(
           data.map((task) => {
@@ -128,7 +133,11 @@ function OverviewTable() {
     console.log("updateTags");
     const newdata = value.map((s) => s.id);
     axios
-      .put(`/api/v1/tasks/${rowData.id}`, { tag_ids: newdata })
+      .put(
+        `/api/v1/tasks/${rowData.id}`,
+        { tag_ids: newdata },
+        { withCredentials: true }
+      )
       .then((response) => {
         getAllData();
       })
@@ -143,7 +152,7 @@ function OverviewTable() {
 
     if (errorList.length < 1) {
       axios
-        .put("api/v1/tasks/" + newData.id, newData)
+        .put("api/v1/tasks/" + newData.id, newData, { withCredentials: true })
         .then((res) => {
           const dataUpdate = [...data];
           const index = oldData.tableData.id;
@@ -175,7 +184,7 @@ function OverviewTable() {
     if (errorList.length < 1) {
       //no error
       axios
-        .post("api/v1/tasks/", newData)
+        .post("api/v1/tasks/", newData, { withCredentials: true })
         .then((res) => {
           // let dataToAdd = [...data];
           // dataToAdd.push(newData);
@@ -199,7 +208,7 @@ function OverviewTable() {
 
   const handleRowDelete = (oldData, resolve) => {
     axios
-      .delete("/api/v1/tasks/" + oldData.id)
+      .delete("/api/v1/tasks/" + oldData.id, { withCredentials: true })
       .then((res) => {
         const dataDelete = [...data];
         const index = oldData.tableData.id;

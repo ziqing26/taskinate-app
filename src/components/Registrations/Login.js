@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { withStyles } from "@material-ui/core/styles";
 
+const primary = "#b2ebf2";
+
 const styles = (theme) => ({
   paper: {
     display: "flex",
@@ -28,7 +30,7 @@ const styles = (theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   button: {
-    backgroundColor: "#b2ebf2",
+    backgroundColor: primary,
   },
 });
 

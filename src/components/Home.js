@@ -6,7 +6,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+// import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = (props) => {
   axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
+
   const classes = useStyles();
   const handleClick = () => {
     axios
@@ -74,18 +75,12 @@ const Home = (props) => {
                 <div>
                   <br></br>
                   <h1>Welcome to Taskinate!</h1>
-                  <ButtonGroup
-                    variant="text"
-                    color="primary"
-                    aria-label="text primary button group"
-                  >
-                    <Link to="/login">
-                      <Button>Log In</Button>
-                    </Link>
-                    <Link to="/signup">
-                      <Button>Sign Up</Button>
-                    </Link>
-                  </ButtonGroup>
+                  <Link to="/login">
+                    <Button>Log In</Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button>Sign Up</Button>
+                  </Link>
                 </div>
               )}
             </div>

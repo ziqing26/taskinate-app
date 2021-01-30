@@ -6,7 +6,9 @@ import TagsList from "./TagsList";
 
 function TagsContainer() {
   const [tags, setTags] = useState([]);
+
   axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
+
   useEffect(() => {
     getAllTags();
   }, []);
@@ -14,7 +16,7 @@ function TagsContainer() {
   const getAllTags = () => {
     console.log("refreshed");
     axios
-      .get("api/v2/tags")
+      .get("api/v2/tags", { withCredentials: true })
       .then((response) => {
         setTags(response.data);
       })
@@ -23,7 +25,7 @@ function TagsContainer() {
 
   const createTag = (e) => {
     axios
-      .post("/api/v2/tags", { name: e })
+      .post("/api/v2/tags", { name: e }, { withCredentials: true })
       .then((response) => {
         // setTags([...tags, response]);
         getAllTags();
@@ -34,7 +36,11 @@ function TagsContainer() {
   function updateTag(e, id) {
     console.log(e);
     axios
-      .put(`/api/v2/tags/${id}`, { tasks: e.target.value })
+      .put(
+        `/api/v2/tags/${id}`,
+        { tasks: e.target.value },
+        { withCredentials: true }
+      )
       .then((response) => {
         setTags(
           tags.map((tag) => {
@@ -51,7 +57,7 @@ function TagsContainer() {
 
   function deleteTag(id) {
     axios
-      .delete(`/api/v2/tags/${id}`)
+      .delete(`/api/v2/tags/${id}`, { withCredentials: true })
       .then((response) => {
         console.log("deleted");
       })

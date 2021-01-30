@@ -54,6 +54,7 @@ class App extends Component {
       isLoggedIn: true,
       user: data.user,
     });
+    console.log(data);
     console.log(this.state.user);
   };
 

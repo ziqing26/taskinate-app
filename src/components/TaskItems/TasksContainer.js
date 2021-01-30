@@ -8,13 +8,14 @@ import TaskList from "./TaskList";
 function TasksContainer() {
   const [tasks, setTasks] = useState([]);
   axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
+
   useEffect(() => {
     getAllTasks();
   }, []);
 
   const getAllTasks = () => {
     axios
-      .get("api/v1/tasks")
+      .get("api/v1/tasks", { withCredentials: true })
       .then((response) => {
         setTasks(response.data);
       })
@@ -23,7 +24,11 @@ function TasksContainer() {
 
   const createTask = (e) => {
     axios
-      .post("/api/v1/tasks/", { title: e, done: false })
+      .post(
+        "/api/v1/tasks/",
+        { title: e, done: false },
+        { withCredentials: true }
+      )
       .then((response) => {
         // setTasks([response, ...tasks]);
         getAllTasks();
@@ -33,7 +38,11 @@ function TasksContainer() {
 
   function updateComplete(e, id) {
     axios
-      .put(`/api/v1/tasks/${id}`, { done: e.target.checked })
+      .put(
+        `/api/v1/tasks/${id}`,
+        { done: e.target.checked },
+        { withCredentials: true }
+      )
       .then((response) => {
         console.log("heyinupdate");
         setTasks(
@@ -51,7 +60,7 @@ function TasksContainer() {
 
   function deleteTask(id) {
     axios
-      .delete(`/api/v1/tasks/${id}`)
+      .delete(`/api/v1/tasks/${id}`, { withCredentials: true })
       .then((response) => {
         console.log("deleted");
       })

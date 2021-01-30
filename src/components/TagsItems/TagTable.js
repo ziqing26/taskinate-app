@@ -13,9 +13,10 @@ function TagTable() {
   }, [tagId]);
 
   axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
+
   const getTag = (id) => {
     axios
-      .get(`/api/v2/tags/${id}`)
+      .get(`/api/v2/tags/${id}`, { withCredentials: true })
       .then((response) => {
         setTag(response.data);
       })

@@ -47,6 +47,7 @@ const tableIcons = {
 
 function FilteredTable({ selectedTasks, selectedTag }) {
   axios.defaults.baseURL = "https://taskinate-api.herokuapp.com";
+
   var columns = [
     { title: "id", field: "id", hidden: true },
     {
@@ -84,7 +85,11 @@ function FilteredTable({ selectedTasks, selectedTag }) {
 
   const handleClick = (e, rowData) => {
     axios
-      .put(`/api/v1/tasks/${rowData.id}`, { done: e.target.checked })
+      .put(
+        `/api/v1/tasks/${rowData.id}`,
+        { done: e.target.checked },
+        { withCredentials: true }
+      )
       .then((response) => {
         setData(
           data.map((task) => {
@@ -107,7 +112,7 @@ function FilteredTable({ selectedTasks, selectedTag }) {
 
     if (errorList.length < 1) {
       axios
-        .put("api/v1/tasks/" + newData.id, newData)
+        .put("api/v1/tasks/" + newData.id, newData, { withCredentials: true })
         .then((res) => {
           const dataUpdate = [...data];
           const index = oldData.tableData.id;
@@ -131,7 +136,7 @@ function FilteredTable({ selectedTasks, selectedTag }) {
 
   const handleRowDelete = (oldData, resolve) => {
     axios
-      .delete("/api/v1/tasks/" + oldData.id)
+      .delete("/api/v1/tasks/" + oldData.id, { withCredentials: true })
       .then((res) => {
         const dataDelete = [...data];
         const index = oldData.tableData.id;
